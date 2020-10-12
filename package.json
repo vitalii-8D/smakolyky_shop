@@ -2,7 +2,7 @@
   "name": "smakolyky_shop",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -40,7 +40,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "rimraf dist && npm run lint && copyfiles -e src/email-templates/* .ts -f src/email-templates/*.* dist/email-templates && tsc-watch --outDir ./dist --onSuccess \"npm run start:dev\" --onFailure \"echo Compilaton Failed\"",
-    "lint": "eslint --fix --ext .ts, .js src",
+    "lint": "eslint --fix --ext .ts src",
     "start:dev": "node -r dotenv/config --inspect=0.0.0.0:9228 ./dist/"
   },
   "author": "",
