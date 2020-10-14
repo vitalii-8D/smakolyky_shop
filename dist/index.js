@@ -5,7 +5,7 @@ const app_1 = require("./app");
 const config_1 = require("./config");
 const server = http.createServer(app_1.app);
 server.listen(config_1.config.PORT, () => {
-    console.log('Listen 5000');
+    console.log(`Listen ${config_1.config.PORT}`);
 });
 process.on('SIGTERM', () => {
     server.close(() => {

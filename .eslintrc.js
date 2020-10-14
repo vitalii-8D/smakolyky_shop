@@ -21,7 +21,7 @@ module.exports = {
         // "array-element-newline": ["error", { "minItems": 2 }],
         // "arrow-body-style": "error",
         'block-scoped-var': 'error',
-        'comma-dangle': ['error', 'never'],
+        'comma-dangle': [ 'error', 'never' ],
         'complexity': 'error',
         'constructor-super': 'error',
         'curly': 'error',
@@ -30,9 +30,9 @@ module.exports = {
         'eol-last': 'error',
         'eqeqeq': 'error',
         'guard-for-in': 'error',
-        'indent': ['error', 2, {'SwitchCase': 1}],
+        'indent': [ 'error', 2, { 'SwitchCase': 1 } ],
         'max-classes-per-file': 'off',
-        'max-len': ['error', {'code': 140}],
+        'max-len': [ 'error', { 'code': 140 } ],
         // "newline-per-chained-call": "error",
         'new-parens': 'error',
         'newline-before-return': 'error',
@@ -60,7 +60,7 @@ module.exports = {
         // "no-magic-numbers": ["error", {"ignoreArrayIndexes": true}],
         'no-multi-spaces': 'error',
         'no-multi-str': 'error',
-        'no-multiple-empty-lines': ["error", {"max": 1, "maxEOF": 1}],
+        'no-multiple-empty-lines': [ "error", { "max": 1, "maxEOF": 1 } ],
         'no-new': 'error',
         'no-new-func': 'error',
         'no-new-wrappers': 'error',
@@ -85,7 +85,7 @@ module.exports = {
         'no-var': 'error',
         'no-void': 'error',
         'object-shorthand': 'error',
-        'one-var': ['error', 'never'],
+        'one-var': [ 'error', 'never' ],
         'padding-line-between-statements': 'error',
         'prefer-arrow-callback': 'error',
         'prefer-const': 'error',
@@ -93,11 +93,11 @@ module.exports = {
             'error',
             'as-needed'
         ],
-        'quotes': ['error', 'single', {'allowTemplateLiterals': true}],
+        'quotes': [ 'error', 'single', { 'allowTemplateLiterals': true } ],
         'radix': 'error',
         'require-atomic-updates': 'off',
         'require-await': 'error',
-        'semi': ['error', 'always'],
+        'semi': [ 'error', 'always' ],
         'sort-imports': [
             'error',
             {
@@ -110,9 +110,9 @@ module.exports = {
             'error',
             {
                 'overrides': {
-                    'if': {'after': true},
-                    'for': {'after': true},
-                    'while': {'after': true}
+                    'if': { 'after': true },
+                    'for': { 'after': true },
+                    'while': { 'after': true }
                 }
             }
         ],
@@ -153,11 +153,11 @@ module.exports = {
         '@typescript-eslint/no-namespace': 'error',
         '@typescript-eslint/no-non-null-assertion': 'error',
         '@typescript-eslint/no-parameter-properties': 'off',
-        '@typescript-eslint/no-unused-vars': ['error', {
+        '@typescript-eslint/no-unused-vars': [ 'error', {
             'vars': 'all',
             'args': 'none',
             'ignoreRestSiblings': false
-        }],
+        } ],
         '@typescript-eslint/triple-slash-reference': 'error',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/prefer-for-of': 'error',

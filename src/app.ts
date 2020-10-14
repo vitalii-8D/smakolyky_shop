@@ -10,13 +10,14 @@ import * as morgan from 'morgan';
 import * as mongoose from 'mongoose';
 import * as path from 'path';
 import {config} from './config';
+import {adminRouter, authRouter, productRouter, userRouter} from './routes';
 
 dotenv.config({});
 
 // Обмеження на кількість запитів за одиницю часу
 const serverRequestLimit = rateLimit({
-  windowMs: 10000,
-  max: 100 // TODO ad this to .dotenv
+  windowMs: config.serverRateLimits.period,
+  max: config.serverRateLimits.maxRequests // TO+DO ad this to .dotenv
 });
 
 class App {
@@ -38,19 +39,22 @@ class App {
 
     this.app.use(express.static(path.join((global as any).appRoot, 'public')));
 
-    // TODO router
+    // TO+DO router
+    this.mountRoutes();
     this.setupDB();
 
     this.app.use(this.customErrorHandler);
   }
 
+  // Підключення бази
   private setupDB(): void {
     mongoose.connect(config.MONGODB_URL, {useNewUrlParser: true});
 
     const db = mongoose.connection;
-    db.on('error', console.log.bind(console, 'MONGO ERROR'))
+    db.on('error', console.log.bind(console, 'MONGO ERROR'));
   }
 
+  // Відловлювання помилок
   private customErrorHandler(err: any, req: Request, res: Response, next: NextFunction): void {
     res
       .status(err.status || 500)
@@ -60,10 +64,11 @@ class App {
       });
   }
 
+  // Налаштовуємо Cors щоб можна було ходити тільки з певних урл
   private configureCors = (origin: any, callback: any) => {
     const whiteList = config.ALLOWED_ORIGIN.split(';');
 
-    if (!origin) {
+    if (!origin) {// For Postman
       return callback(null, true);
     }
     if (!whiteList.includes(origin)) {
@@ -73,11 +78,12 @@ class App {
     return callback(null, true);
   }
 
+  // Власне роути
   private mountRoutes(): void {
-    this.app.use('/admin', authRouter),
-    this.app.use('/auth', adminRouter),
-    this.app.use('/products', productRouter),
-    this.app.use('/users', authRouter)
+    this.app.use('/admin', adminRouter);
+    this.app.use('/auth', authRouter);
+    this.app.use('/products', productRouter);
+    this.app.use('/users', userRouter);
   }
 
 }

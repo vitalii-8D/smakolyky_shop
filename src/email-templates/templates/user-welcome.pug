@@ -1,0 +1,7 @@
+extends src/email-templates/template
+block content
+    div
+        | Вітаємо на Смаколиках
+        | Для підтвердження тицьни суди
+        div
+            a(href=frontendUrl + `/email/confirm/${token}`) ТУТ
