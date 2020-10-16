@@ -1,3 +1,3 @@
 export enum ActionEnum {
-  USER_REGISTERED
+  USER_REGISTER = '0'
 }

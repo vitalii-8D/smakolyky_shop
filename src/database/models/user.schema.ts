@@ -4,6 +4,11 @@ import {UserRoleEnum, UserStatusEnum} from '../../constants';
 
 export type UserType = IUser & Document;
 
+const tokenSubModel = {
+  token: String,
+  action: String
+};
+
 export const UserSchema: Schema = new Schema<IUser>({ //TO+DO interface
   name: {
     type: String,
@@ -48,6 +53,7 @@ export const UserSchema: Schema = new Schema<IUser>({ //TO+DO interface
     required: true,
     default: UserStatusEnum.PENDING
   },
+  tokens: [tokenSubModel],
   createdAt: {
     type: Date,
     default: Date.now()
