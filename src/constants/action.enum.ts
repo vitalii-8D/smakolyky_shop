@@ -1,3 +1,4 @@
 export enum ActionEnum {
-  USER_REGISTER = '0'
+  USER_REGISTER
+  // USER_REGISTER= 'hello'
 }

@@ -5,7 +5,7 @@ interface EmailAction {
 }
 
 export const htmlTemplates: EmailAction = {
-  [ActionEnum.USER_REGISTERED]: {
+  [ActionEnum.USER_REGISTER]: {
     subject: 'Вітаємо',
     templateFileName: 'user-welcome'
   }
