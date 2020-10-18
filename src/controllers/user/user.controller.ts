@@ -1,10 +1,10 @@
 import {NextFunction, Request, Response} from 'express';
-import {IUser} from '../../models';
-import {userService} from '../../services/user';
-import {newUserValidator} from '../../validators/user';
+import {IRequestExtended, IUser} from '../../models';
+import {emailService, userService} from '../../services';
+import {newUserValidator} from '../../validators';
 import {hashPassword, tokenizer} from '../../helpers';
-import {emailService} from '../../services/mail';
-import {ActionEnum} from '../../constants';
+import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
+import {customErrors, ErrorHandler} from '../../errors';
 
 // import * as Joi from 'joi';
 
@@ -32,9 +32,24 @@ class UserController {
     res.sendStatus(201);
   }
 
-  confirmUser(req: Request, res: Response, next: NextFunction) {
+  async confirmUser(req: IRequestExtended, res: Response, next: NextFunction) {
+    const {_id, status} = req.user as IUser;
+    const token = req.get(RequestHeadersEnum.AUTHORIZATION) as any;
 
-    res.end();
+    if (status !== UserStatusEnum.PENDING) {
+      return next(
+        new ErrorHandler(
+          ResponseStatusCodesEnum.BAD_REQUEST,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.message,
+          customErrors.BAD_REQUEST_USER_ACTIVATED.code
+        )
+      );
+    }
+
+    await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
+    await userService.removeActionToken(ActionEnum.USER_REGISTER, token);
+
+    res.status(200).json('User confirmed!').end();
   }
 }
 

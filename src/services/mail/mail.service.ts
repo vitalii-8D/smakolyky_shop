@@ -2,7 +2,7 @@ import * as EmailTemplates from 'email-templates';
 import * as nodemailer from 'nodemailer';
 import * as path from 'path';
 
-import {ActionEnum} from '../../constants';
+import {ActionEnum, ResponseStatusCodesEnum} from '../../constants';
 import {htmlTemplates} from '../../email-templates';
 import {config} from '../../config';
 import {ErrorHandler} from '../../errors';
@@ -13,7 +13,7 @@ if (
   || !config.ROOT_EMAIL_PASSWORD
   || !config.ROOT_EMAIL_SERVICE
 ) {
-  throw new ErrorHandler(500, 'Root email credential are not defined');
+  throw new ErrorHandler(ResponseStatusCodesEnum.SERVER, 'Root email credential are not defined');
 }
 
 const contextExtention = {

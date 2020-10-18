@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const config_1 = require("./config");
 const routes_1 = require("./routes");
+const constants_1 = require("./constants");
 dotenv.config({});
 // Обмеження на кількість запитів за одиницю часу
 const serverRequestLimit = rateLimit({
@@ -57,7 +58,7 @@ class App {
     // Відловлювання помилок
     customErrorHandler(err, req, res, next) {
         res
-            .status(err.status || 500)
+            .status(err.status || constants_1.ResponseStatusCodesEnum.SERVER)
             .json({
             message: err.message || 'Unknown Error',
             code: err.code
