@@ -1,0 +1,8 @@
+extends template
+block content
+    div
+        | Здається ви забули пароль
+        br
+        | Для підтвердження натисніть сюди
+        div.centered
+            a(href=frontendUrl + `/password/reset/${token}`) Підтвердити

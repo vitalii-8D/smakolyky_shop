@@ -1,9 +1,9 @@
 import {NextFunction, Request, Response} from 'express';
 import {IRequestExtended, IUser} from '../../models';
-import {emailService, userService} from '../../services';
+import {emailService, logService, userService} from '../../services';
 import {newUserValidator} from '../../validators';
 import {hashPassword, tokenizer} from '../../helpers';
-import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
+import {ActionEnum, LogsEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
 import {customErrors, ErrorHandler} from '../../errors';
 
 // import * as Joi from 'joi';
@@ -29,6 +29,8 @@ class UserController {
 
     await emailService.sendEmail(user.email, ActionEnum.USER_REGISTER, {token: access_token});
 
+    await logService.createLog({event: LogsEnum.USER_REGISTERED, userId: _id});
+
     res.sendStatus(201);
   }
 
@@ -47,9 +49,22 @@ class UserController {
     }
 
     await userService.updateUserByParams({_id}, {status: UserStatusEnum.CONFIRMED});
+
     await userService.removeActionToken(ActionEnum.USER_REGISTER, token);
 
+    await logService.createLog({event: LogsEnum.USER_CONFIRMED, userId: _id});
+
     res.status(200).json('User confirmed!').end();
+  }
+
+  async forgotPassword(req: IRequestExtended, res: Response, next: NextFunction) {
+    const {_id, email} = req.user as IUser;
+
+    const {access_token} = tokenizer(ActionEnum.FORGOT_PASSWORD);
+    await userService.addActionToken(_id, {action: ActionEnum.USER_REGISTER, token: access_token});
+    await emailService.sendEmail(email, ActionEnum.FORGOT_PASSWORD);
+
+    res.end();
   }
 }
 

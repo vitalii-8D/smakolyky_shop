@@ -42,12 +42,11 @@ class UserService {
   }
 
   removeActionToken(action: ActionEnum, token: string): Promise<IUser | null> {
-
     return UserModel.update(
       {},
       {$pull: {tokens: {action, token}}},
       {multi: true}
-    ) as any
+    ) as any;
   }
 
 }

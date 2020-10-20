@@ -11,7 +11,7 @@ import * as mongoose from 'mongoose';
 import * as path from 'path';
 import {config} from './config';
 import {adminRouter, authRouter, productRouter, userRouter} from './routes';
-import {ResponseStatusCodesEnum} from "./constants";
+import {ResponseStatusCodesEnum} from './constants';
 
 dotenv.config({});
 
