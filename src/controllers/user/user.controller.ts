@@ -1,7 +1,7 @@
 import {NextFunction, Request, Response} from 'express';
 import {IRequestExtended, IUser} from '../../models';
 import {emailService, logService, userService} from '../../services';
-import {newUserValidator} from '../../validators';
+// import {newUserValidator} from '../../validators';
 import {hashPassword, tokenizer} from '../../helpers';
 import {ActionEnum, LogsEnum, RequestHeadersEnum, ResponseStatusCodesEnum, UserStatusEnum} from '../../constants';
 import {customErrors, ErrorHandler} from '../../errors';
@@ -11,12 +11,12 @@ import {customErrors, ErrorHandler} from '../../errors';
 class UserController {
   async createUser(req: Request, res: Response, next: NextFunction) {
     const user = req.body as IUser;
-    // TO+DO validate user
-    const {error} = await newUserValidator.validate(user);
+    // TO+DO validate user (transfered to check-is-user-valid middleware)
+    /*const {error} = await newUserValidator.validate(user);
 
     if (error) {
       return next(new Error(error.details[0].message));
-    }
+    }*/
     // TO+DO hash password
     user.password = await hashPassword(user.password);
 
@@ -60,8 +60,11 @@ class UserController {
   async forgotPassword(req: IRequestExtended, res: Response, next: NextFunction) {
     const {_id, email} = req.user as IUser;
 
+    console.log('emailValidatorMiddleware -----****---**-*-*');
+    console.log(req.body);
+
     const {access_token} = tokenizer(ActionEnum.FORGOT_PASSWORD);
-    await userService.addActionToken(_id, {action: ActionEnum.USER_REGISTER, token: access_token});
+    await userService.addActionToken(_id, {action: ActionEnum.FORGOT_PASSWORD, token: access_token});
     await emailService.sendEmail(email, ActionEnum.FORGOT_PASSWORD);
 
     res.end();

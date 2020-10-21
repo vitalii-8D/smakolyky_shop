@@ -7,6 +7,10 @@ import {IRequestExtended} from '../../models';
 export const checkIsUserExistsMiddleware =
   async (req: IRequestExtended, res: Response, next: NextFunction): Promise<void | NextFunction> => {
     const {email} = req.body;
+
+    console.log('emailValidatorMiddleware -----****---**-*-*');
+    console.log(req.body);
+
     const userByEmail = await userService.findOneByParams({email});
 
     if (!userByEmail) {
