@@ -5,7 +5,7 @@ import {ResponseStatusCodesEnum} from '../../constants';
 
 export {emailValidator} from '../../validators';
 
-export const emailValidatorMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const emailValidatorMiddleware = (req: Request, res: Response, next: NextFunction): void | NextFunction => {
   const {email} = req.body;
 
   /*console.log('emailValidatorMiddleware -----****---**-*-*');

@@ -4,7 +4,7 @@ import {userService} from '../../services';
 import {customErrors, ErrorHandler} from '../../errors';
 import {IRequestExtended} from '../../models';
 
-export const checkForgotPasswordMiddleware = async (req: IRequestExtended, res: Response, next: NextFunction) => {
+export const checkForgotPasswordMiddleware = async (req: IRequestExtended, res: Response, next: NextFunction): Promise<any> => {
   const token = req.get(RequestHeadersEnum.AUTHORIZATION);
 
   if (!token) {
@@ -19,4 +19,4 @@ export const checkForgotPasswordMiddleware = async (req: IRequestExtended, res: 
 
   req.user = userByToken;
   next();
-}
+};
