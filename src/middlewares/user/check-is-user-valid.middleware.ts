@@ -3,7 +3,7 @@ import {ErrorHandler} from '../../errors';
 import {ResponseStatusCodesEnum} from '../../constants';
 import {newUserValidator} from '../../validators/user';
 
-export const checkIsUserValidMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const checkIsUserValidMiddleware = (req: Request, res: Response, next: NextFunction): void | NextFunction => {
   const user = req.body;
 
   console.log('checkIsUserValidMiddleware -----****---**-*-*');

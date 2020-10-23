@@ -7,7 +7,7 @@ import {ErrorHandler} from '../errors';
 
 // const verify = promisify(jwt.verify);
 
-export const tokenVerificator = (action: ActionEnum, token: string): string | object => {
+export const tokenVerificator = (action: ActionEnum, token: string): any => {
   let isValid;
 
   switch (action) {

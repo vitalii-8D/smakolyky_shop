@@ -13,10 +13,10 @@ export const checkConfirmTokenMiddleware = async (req: IRequestExtended, res: Re
   }
 
   try {
+    // console.log('---***---   Starting confirmation   ---***---');
     const verifyResult = await tokenVerificator(ActionEnum.USER_REGISTER, token);
     console.log('---***---   verifyResult   ---***---');
     console.log(verifyResult);
-    console.log('---***---   verifyResult   ---***---');
   } catch (e) {
     return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, e.message));
   }
