@@ -4,13 +4,13 @@ import {
   checkConfirmTokenMiddleware,
   checkForgotPasswordMiddleware,
   checkIsEmailExist,
-  checkIsTokenAlreadyExistsMiddleware,
+  // checkIsTokenAlreadyExistsMiddleware,
   checkIsUserExistsMiddleware,
   checkIsUserValidMiddleware,
   emailValidatorMiddleware,
   singlePasswordValidatorMiddleware
 } from '../../middlewares';
-import {ActionEnum} from '../../constants';
+// import {ActionEnum} from '../../constants';
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.post('/confirm', checkConfirmTokenMiddleware, userController.confirmUser)
 router.post('/password/forgot',
   emailValidatorMiddleware,
   checkIsUserExistsMiddleware,
-  checkIsTokenAlreadyExistsMiddleware(ActionEnum.FORGOT_PASSWORD, true),
+  // checkIsTokenAlreadyExistsMiddleware(ActionEnum.FORGOT_PASSWORD, true),
   userController.forgotPassword);
 router.post('/password/reset',
   singlePasswordValidatorMiddleware,

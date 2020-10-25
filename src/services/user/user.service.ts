@@ -32,7 +32,7 @@ class UserService {
     return UserModel.findOne(findObject) as any;
   }
 
-  findByActionEnum(action: ActionEnum): Promise<IUser | null> {
+  /*findByActionEnum(action: ActionEnum): Promise<IUser | null> {
     return UserModel.findOne({
       'tokens.action': action
     }) as any;
@@ -46,7 +46,7 @@ class UserService {
       {$pull: {tokens: {action}}}
       // {multi: true}
     ) as any;
-  }
+  }*/
 
   findUserByActionToken(action: ActionEnum, token: string): Promise<IUser | null> {
     return UserModel.findOne({
@@ -58,6 +58,8 @@ class UserService {
   }
 
   removeActionToken(action: ActionEnum, token: string): Promise<IUser | null> {
+    console.log('removeActionToken');
+
     return UserModel.update(
       {},
       {$pull: {tokens: {action, token}}},

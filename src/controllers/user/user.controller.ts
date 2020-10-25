@@ -58,13 +58,20 @@ class UserController {
   }
 
   async forgotPassword(req: IRequestExtended, res: Response, next: NextFunction) {
-    const {_id, email} = req.user as IUser;
-
-    console.log('emailValidatorMiddleware -----****---**-*-*');
-    console.log(req.body);
+    const {_id, email, tokens = []} = req.user as IUser;
 
     const {access_token} = tokenizer(ActionEnum.FORGOT_PASSWORD);
+
+    if (tokens.length > 0) {
+      const tokenExists = tokens.find(tokenObj => tokenObj.action === ActionEnum.FORGOT_PASSWORD);
+      if (tokenExists) {
+        const removedToken = tokenExists.token || '';
+        await userService.removeActionToken(ActionEnum.FORGOT_PASSWORD, removedToken);
+      }
+    }
+
     await userService.addActionToken(_id, {action: ActionEnum.FORGOT_PASSWORD, token: access_token});
+
     await emailService.sendEmail(email, ActionEnum.FORGOT_PASSWORD, {token: access_token});
 
     res.status(200).json('Mail sended!').end();
