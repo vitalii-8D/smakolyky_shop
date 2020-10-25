@@ -65,7 +65,20 @@ class UserController {
 
     const {access_token} = tokenizer(ActionEnum.FORGOT_PASSWORD);
     await userService.addActionToken(_id, {action: ActionEnum.FORGOT_PASSWORD, token: access_token});
-    await emailService.sendEmail(email, ActionEnum.FORGOT_PASSWORD);
+    await emailService.sendEmail(email, ActionEnum.FORGOT_PASSWORD, {token: access_token});
+
+    res.status(200).json('Mail sended!').end();
+  }
+
+  async setForgotPass(req: IRequestExtended, res: Response, next: NextFunction) {
+    const {_id} = req.user as IUser;
+    const {password} = req.body;
+    const tokenToDelete = req.get(RequestHeadersEnum.AUTHORIZATION) as string;
+    const hashPass = await hashPassword(password);
+
+    await userService.updateUserByParams({_id}, {password: hashPass});
+
+    await userService.removeActionToken(ActionEnum.FORGOT_PASSWORD, tokenToDelete);
 
     res.end();
   }

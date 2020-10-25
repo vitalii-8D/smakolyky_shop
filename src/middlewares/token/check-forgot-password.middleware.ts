@@ -3,7 +3,7 @@ import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum} from '../../con
 import {userService} from '../../services';
 import {customErrors, ErrorHandler} from '../../errors';
 import {IRequestExtended} from '../../models';
-import {tokenVerificator} from "../../helpers";
+import {tokenVerificator} from '../../helpers';
 
 export const checkForgotPasswordMiddleware = async (req: IRequestExtended, res: Response, next: NextFunction): Promise<any> => {
   const token = req.get(RequestHeadersEnum.AUTHORIZATION);
@@ -15,7 +15,7 @@ export const checkForgotPasswordMiddleware = async (req: IRequestExtended, res: 
   try {
     // console.log('---***---   Starting confirmation   ---***---');
     const verifyResult = await tokenVerificator(ActionEnum.FORGOT_PASSWORD, token);
-    console.log('---***---   verifyResult   ---***---');
+    console.log('---***---   verifyForgotResult   ---***---');
     console.log(verifyResult);
   } catch (e) {
     return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, e.message));
