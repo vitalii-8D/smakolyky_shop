@@ -5,7 +5,7 @@ import {
   checkForgotPasswordMiddleware,
   checkIsEmailExist,
   // checkIsTokenAlreadyExistsMiddleware,
-  checkIsUserExistsMiddleware,
+  checkIsUserExistsByMailMiddleware,
   checkIsUserValidMiddleware,
   emailValidatorMiddleware,
   singlePasswordValidatorMiddleware
@@ -18,7 +18,7 @@ router.post('', checkIsUserValidMiddleware, checkIsEmailExist, userController.cr
 router.post('/confirm', checkConfirmTokenMiddleware, userController.confirmUser);
 router.post('/password/forgot',
   emailValidatorMiddleware,
-  checkIsUserExistsMiddleware,
+  checkIsUserExistsByMailMiddleware,
   // checkIsTokenAlreadyExistsMiddleware(ActionEnum.FORGOT_PASSWORD, true),
   userController.forgotPassword);
 router.post('/password/reset',
