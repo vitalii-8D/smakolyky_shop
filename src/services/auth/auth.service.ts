@@ -1,5 +1,5 @@
 import {AccessTokenModel} from '../../database';
-import {IAccessToken} from '../../models';
+import {IAccessToken, IUser} from '../../models';
 
 class AuthService {
   createTokenPair(tokenObj: Partial<IAccessToken>): Promise<IAccessToken> {
@@ -8,8 +8,13 @@ class AuthService {
     return tokenToCreate.save();
   }
 
-  findUserByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IAccessToken | null> {
-    return AccessTokenModel.findOne(findObject) as any;
+  async findUserByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IUser | null> {
+    const tokenAndUser = await AccessTokenModel
+      .findOne(findObject)
+      .populate('userId')
+      .select({userId: 1, _id: 0}) as any;
+
+    return tokenAndUser?.userId?.toJSON();
   }
 
   removeToken(removeObject: Partial<IAccessToken>): Promise<any> {

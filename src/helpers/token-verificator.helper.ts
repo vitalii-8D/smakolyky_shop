@@ -19,6 +19,10 @@ export const tokenVerificator = (action: ActionEnum, token: string): any => {
       isValid = jwt.verify(token, config.JWT_PASS_RESET_SECRET);
       break;
 
+    case ActionEnum.USER_AUTH:
+      isValid = jwt.verify(token, config.JWT_SECRET);
+      break;
+
     default:
       throw new ErrorHandler(ResponseStatusCodesEnum.SERVER, 'Wrond action');
   }
