@@ -1,7 +1,7 @@
 import {NextFunction, Response} from 'express';
 import {ActionEnum, RequestHeadersEnum, ResponseStatusCodesEnum} from '../../constants';
 import {customErrors, ErrorHandler} from '../../errors';
-import {userService} from '../../services';
+import {authService} from '../../services';
 import {IRequestExtended} from '../../models';
 import {tokenVerificator} from '../../helpers';
 
@@ -14,14 +14,13 @@ export const checkAccessTokenMiddleware = async (req: IRequestExtended, res: Res
 
   try {
     // console.log('---***---   Starting confirmation   ---***---');
-    const verifyResult = await tokenVerificator(ActionEnum.USER_AUTH, token);
-    console.log('---***---   checkAccessTokenMiddleware   ---***---');
-    console.log(verifyResult);
+    await tokenVerificator(ActionEnum.USER_AUTH, token);
   } catch (e) {
     return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, e.message));
   }
 
-  const userByToken = await userService.findUserByActionToken(ActionEnum.USER_AUTH, token);
+  const userByToken = await authService.findUserByToken({accessToken: token});
+  console.log(userByToken);
 
   if (!userByToken) {
     return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message));

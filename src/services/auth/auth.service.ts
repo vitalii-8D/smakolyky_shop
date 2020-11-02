@@ -3,9 +3,15 @@ import {IAccessToken, IUser} from '../../models';
 
 class AuthService {
   createTokenPair(tokenObj: Partial<IAccessToken>): Promise<IAccessToken> {
+    /*console.log('---***---  tokenObj  ---***---');
+    console.log(tokenObj);*/
     const tokenToCreate = new AccessTokenModel(tokenObj);
 
     return tokenToCreate.save();
+  }
+
+  findTokensByParams(findObj: Partial<IAccessToken>): Promise<IAccessToken | null> {
+    return AccessTokenModel.findOne(findObj) as any;
   }
 
   async findUserByToken(findObject: { accessToken?: string, refreshToken?: string }): Promise<IUser | null> {

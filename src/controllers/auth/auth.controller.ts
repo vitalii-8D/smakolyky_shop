@@ -15,10 +15,13 @@ class AuthController {
       if (!isPasswordEquels) {
         return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message));
       }
+      const {access_token, refresh_token} = tokenizer(ActionEnum.USER_AUTH);
 
-      const tokensPair = tokenizer(ActionEnum.USER_AUTH);
-
-      const {accessToken, refreshToken} = await authService.createTokenPair({...tokensPair, userId: _id});
+      const {accessToken, refreshToken} = await authService.createTokenPair({
+        accessToken: access_token,
+        refreshToken: refresh_token,
+        userId: _id
+      });
 
       res.json({accessToken, refreshToken});
     } catch (e) {
@@ -31,7 +34,7 @@ class AuthController {
 
     await authService.removeToken({accessToken: token});
 
-    res.sendStatus(ResponseStatusCodesEnum.NO_CONTENT);
+    res.json('Logged out').sendStatus(ResponseStatusCodesEnum.NO_CONTENT);
   }
 }
 

@@ -15,8 +15,9 @@ export const checkIsUserExistsByMailMiddleware =
 
     if (!userByEmail) {
       return next(new ErrorHandler(
-        ResponseStatusCodesEnum.NOT_FOUND,
-        customErrors.NOT_FOUND.message
+        ResponseStatusCodesEnum.FORBIDDEN,
+        customErrors.FORBIDDEN_WRONG_CREDENTIALS.message,
+        customErrors.FORBIDDEN_WRONG_CREDENTIALS.code
       ));
     }
 

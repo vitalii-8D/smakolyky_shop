@@ -4,7 +4,7 @@ export enum ResponseStatusCodesEnum {
 
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
-  FORBIDDEBN = 403,
+  FORBIDDEN = 403,
   NOT_FOUND = 404,
 
   SERVER = 500

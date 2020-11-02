@@ -5,9 +5,9 @@ import {ResponseStatusCodesEnum} from '../../constants';
 
 export const checkIsEmailExist = async (req: Request, res: Response, next: NextFunction): Promise<void | NextFunction> => {
   const {email} = req.body;
-  console.log('---***---   req.body   ---***---');
+  /*console.log('---***---   req.body   ---***---');
   console.log(req.body);
-  console.log('---***---   req.body   ---***---');
+  console.log('---***---   req.body   ---***---');*/
 
   const userByEmail = await userService.findOneByParams({email});
 
