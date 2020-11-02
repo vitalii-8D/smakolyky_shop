@@ -20,7 +20,7 @@ export const checkAccessTokenMiddleware = async (req: IRequestExtended, res: Res
   }
 
   const userByToken = await authService.findUserByToken({accessToken: token});
-  console.log(userByToken);
+  // console.log(userByToken);
 
   if (!userByToken) {
     return next(new ErrorHandler(ResponseStatusCodesEnum.NOT_FOUND, customErrors.NOT_FOUND.message));

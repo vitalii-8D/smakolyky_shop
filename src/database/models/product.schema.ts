@@ -1,8 +1,12 @@
 import {Document, model, Model, Schema} from 'mongoose';
 import {IProduct} from '../../models';
-import {TableNamesEnum} from '../../constants';
+import {ProductTypeEnum, TableNamesEnum} from '../../constants';
 
 export type ProductType = IProduct & Document;
+
+console.log('---***--- ProductTypeEnum');
+console.log(Object.values(ProductTypeEnum));
+console.log('---***--- ProductTypeEnum');
 
 export const ProductSchema: Schema = new Schema<IProduct>({
   title: {
@@ -14,6 +18,11 @@ export const ProductSchema: Schema = new Schema<IProduct>({
     required: true
   },
   type: {
+    type: String,
+    required: true,
+    enum: Object.values(ProductTypeEnum)
+  },
+  category: {
     type: String,
     required: true
   },
@@ -53,3 +62,17 @@ export const ProductSchema: Schema = new Schema<IProduct>({
 }, {timestamps: true});
 
 export const ProductModel: Model<ProductType> = model(TableNamesEnum.PRODUCT, ProductSchema);
+
+/*{
+  "title": "",
+  "description": "",
+  "type": "",
+  "hasDiscount": "",
+  "oldPrise": "",
+  "tags": "",
+  "price": "",
+  "photo": "",
+  "docs": "",
+  "stockCount": "",
+  "userId": ""
+}*/
