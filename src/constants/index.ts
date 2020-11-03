@@ -8,3 +8,4 @@ export * from './response-status-codes.enum';
 export * from './table-names.enum';
 export * from './log.enum';
 export * from './product-type.enum';
+export * from './cart-status.enum';

@@ -1,6 +1,7 @@
 import {IRequestExtended, IUser} from '../../models';
 import {NextFunction, Response} from 'express';
-import {productService} from '../../services';
+import {logService, productService} from '../../services';
+import {LogsEnum} from '../../constants';
 
 class ProductController {
   async createProduct(req: IRequestExtended, res: Response, next: NextFunction) {
@@ -8,6 +9,9 @@ class ProductController {
     const product = req.body;
 
     const newProduct = await productService.createProduct({...product, userId: _id});
+
+    const {title, _id: prodId, description} = newProduct;
+    await logService.createLog({userId: _id, event: LogsEnum.PRODUCT_CREATED, data: JSON.stringify({prodId, title, description})});
 
     res.json(newProduct);
   }

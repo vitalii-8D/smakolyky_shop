@@ -74,6 +74,8 @@ class UserController {
 
     await emailService.sendEmail(email, ActionEnum.FORGOT_PASSWORD, {token: access_token});
 
+    await logService.createLog({userId: _id, event: LogsEnum.PASSWORD_RESET_REQUEST});
+
     res.status(200).json('Mail sended!').end();
   }
 
@@ -86,6 +88,8 @@ class UserController {
     await userService.updateUserByParams({_id}, {password: hashPass});
 
     await userService.removeActionToken(ActionEnum.FORGOT_PASSWORD, tokenToDelete);
+
+    await logService.createLog({userId: _id, event: LogsEnum.PASSWORD_CHANGED});
 
     res.end();
   }
